@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChronoMaster Pro | Advanced Stopwatch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body data-theme="light">
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-stopwatch"></i> ChronoMaster Pro</h1>
+            <div class="theme-switcher">
+                <button id="light-theme" class="theme-btn active" title="Light Mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button id="dark-theme" class="theme-btn" title="Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="professional-theme" class="theme-btn" title="Professional Mode">
+                    <i class="fas fa-briefcase"></i>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <div class="stopwatch-display">
+                <div class="time-display">
+                    <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>.<span id="milliseconds">00</span>
+                </div>
+                <div class="controls">
+                    <button id="start-btn" class="control-btn" title="Start (Space)">
+                        <i class="fas fa-play"></i> Start
+                    </button>
+                    <button id="pause-btn" class="control-btn" disabled title="Pause (Space)">
+                        <i class="fas fa-pause"></i> Pause
+                    </button>
+                    <button id="reset-btn" class="control-btn" disabled title="Reset (R)">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                    <button id="lap-btn" class="control-btn" disabled title="Lap (L)">
+                        <i class="fas fa-flag"></i> Lap
+                    </button>
+                </div>
+            </div>
+
+            <div class="features-panel">
+                <div class="feature-tabs">
+                    <button class="feature-tab active" data-tab="laps">
+                        <i class="fas fa-list-ol"></i> Laps
+                    </button>
+                    <button class="feature-tab" data-tab="analytics">
+                        <i class="fas fa-chart-bar"></i> Analytics
+                    </button>
+                    <button class="feature-tab" data-tab="settings">
+                        <i class="fas fa-cog"></i> Settings
+                    </button>
+                </div>
+
+                <div class="feature-content">
+                    <div id="laps" class="tab-content active">
+                        <h3><i class="fas fa-history"></i> Lap History</h3>
+                        <div class="lap-list" id="lap-list">
+                            <div class="lap-header">
+                                <span>Lap #</span>
+                                <span>Time</span>
+                                <span>Split</span>
+                            </div>
+                            <!-- Lap items will be added here dynamically -->
+                        </div>
+                    </div>
+
+                    <div id="analytics" class="tab-content">
+                        <h3><i class="fas fa-chart-pie"></i> Session Analytics</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h4><i class="fas fa-clock"></i> Total Time</h4>
+                                <p id="total-time">00:00:00.00</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4><i class="fas fa-calculator"></i> Average Lap</h4>
+                                <p id="avg-lap">00:00:00.00</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4><i class="fas fa-bolt"></i> Fastest Lap</h4>
+                                <p id="fastest-lap">00:00:00.00</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4><i class="fas fa-turtle"></i> Slowest Lap</h4>
+                                <p id="slowest-lap">00:00:00.00</p>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="lap-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div id="settings" class="tab-content">
+                        <h3><i class="fas fa-sliders-h"></i> Application Settings</h3>
+                        <div class="settings-grid">
+                            <div class="setting-option">
+                                <label for="sound-toggle">
+                                    <i class="fas fa-volume-up"></i> Enable Sounds
+                                </label>
+                                <label class="switch">
+                                    <input type="checkbox" id="sound-toggle" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="setting-option">
+                                <label for="precision-select">
+                                    <i class="fas fa-stopwatch"></i> Time Precision
+                                </label>
+                                <select id="precision-select" class="styled-select">
+                                    <option value="3">Milliseconds (00.000)</option>
+                                    <option value="2" selected>Centiseconds (00.00)</option>
+                                    <option value="1">Deciseconds (00.0)</option>
+                                    <option value="0">Seconds (00)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="setting-option">
+                                <label for="split-method">
+                                    <i class="fas fa-flag-checkered"></i> Lap Display Mode
+                                </label>
+                                <select id="split-method" class="styled-select">
+                                    <option value="lap">Lap Time (Cumulative)</option>
+                                    <option value="split">Split Time (Interval)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="setting-option">
+                                <label for="keyboard-shortcuts">
+                                    <i class="fas fa-keyboard"></i> Keyboard Shortcuts
+                                </label>
+                                <div class="shortcuts-list">
+                                    <p><span>Space</span> Start/Pause</p>
+                                    <p><span>L</span> Record Lap</p>
+                                    <p><span>R</span> Reset</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p><i class="far fa-copyright"></i> 2025 Skill Craft Technology | ChronoMaster Pro v2.0</p>
+        </footer>
+    </div>
+
+    <!-- Audio elements for sound effects -->
+    <audio id="click-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3" preload="auto" type="audio/mpeg"></audio>
+    <audio id="beep-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" preload="auto" type="audio/mpeg"></audio>
+    <audio id="lap-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" preload="auto" type="audio/mpeg"></audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+    <script>
+    // Voice feedback for Lap button
+    document.addEventListener('DOMContentLoaded', function() {
+        const lapBtn = document.getElementById('lap-btn');
+        const soundToggle = document.getElementById('sound-toggle');
+        function isSoundEnabled() {
+            return soundToggle && soundToggle.checked;
+        }
+        if (lapBtn) {
+            lapBtn.addEventListener('click', function() {
+                if ('speechSynthesis' in window && isSoundEnabled()) {
+                    const utter = new SpeechSynthesisUtterance('Lap recorded');
+                    window.speechSynthesis.speak(utter);
+                }
+            });
+        }
+        // Optional: Add voice for start, pause, reset
+        const startBtn = document.getElementById('start-btn');
+        if (startBtn) {
+            startBtn.addEventListener('click', function() {
+                if ('speechSynthesis' in window && isSoundEnabled()) {
+                    const utter = new SpeechSynthesisUtterance('Stopwatch started');
+                    window.speechSynthesis.speak(utter);
+                }
+            });
+        }
+        const pauseBtn = document.getElementById('pause-btn');
+        if (pauseBtn) {
+            pauseBtn.addEventListener('click', function() {
+                if ('speechSynthesis' in window && isSoundEnabled()) {
+                    const utter = new SpeechSynthesisUtterance('Stopwatch paused');
+                    window.speechSynthesis.speak(utter);
+                }
+            });
+        }
+        const resetBtn = document.getElementById('reset-btn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', function() {
+                if ('speechSynthesis' in window && isSoundEnabled()) {
+                    const utter = new SpeechSynthesisUtterance('Stopwatch reset');
+                    window.speechSynthesis.speak(utter);
+                }
+            });
+        }
+    });
+    </script>
+    </body>
+    </html>
